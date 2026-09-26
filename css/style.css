@@ -44,6 +44,119 @@ html, body {
   visibility: visible !important;
 }
 
+/* Accessibilità: focus visibile per navigazione da tastiera */
+a:focus-visible,
+button:focus-visible,
+.cal-day.disponibile:focus-visible {
+  outline: 3px solid var(--giallo-limone);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--blu-mare);
+  color: #ffffff;
+  padding: 10px 16px;
+  z-index: 1000000;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+.testo-secondario {
+  font-size: 0.85rem;
+  color: var(--grigio-testo-muto);
+  margin-top: 0.5rem;
+}
+
+.codici-legali {
+  margin-top: 0.2rem;
+}
+
+/* Banner Cookie GDPR */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1e293b;
+  color: #ffffff;
+  padding: 16px;
+  text-align: center;
+  z-index: 999999;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+}
+
+.cookie-testo {
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.btn-cookie {
+  border: none;
+  padding: 8px 18px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.btn-cookie-accetta {
+  background: #25D366;
+  color: #ffffff;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.btn-cookie-rifiuta {
+  background: #64748b;
+  color: #ffffff;
+}
+
+/* Card badge riconoscimenti */
+.card-badge {
+  text-align: center;
+}
+
+.card-badge-airbnb {
+  border-left-color: #ff385c;
+}
+
+.card-badge-airbnb h3 {
+  color: #ff385c;
+}
+
+.card-badge-booking {
+  border-left-color: #003580;
+}
+
+.card-badge-booking h3 {
+  color: #003580;
+}
+
+.badge-img-wrapper {
+  margin: 1rem 0;
+}
+
+.badge-img {
+  max-width: 140px;
+  height: auto;
+}
+
+.titolo-modal-calendario {
+  margin-bottom: 15px;
+  color: var(--blu-mare);
+  text-align: center;
+}
+
+.titolo-galleria-modal {
+  color: #ffffff;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
 ul {
   list-style: none;
 }
@@ -1011,6 +1124,13 @@ footer p {
   background-color: #e0f2fe;
   color: #0369a1;
   font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.cal-day.disponibile:hover {
+  transform: scale(1.1);
+  background-color: #93c5fd;
 }
 
 .cal-day.occupato {
@@ -1019,6 +1139,7 @@ footer p {
   text-decoration: line-through;
   opacity: 0.7;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .cal-day.empty {
@@ -1049,20 +1170,6 @@ footer p {
 /* ==========================================
    13. STILI SELEZIONE INTERATTIVA CALENDARIO
    ========================================== */
-.cal-day.disponibile {
-  cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.15s ease;
-}
-
-.cal-day.disponibile:hover {
-  transform: scale(1.1);
-  background-color: #93c5fd;
-}
-
-.cal-day.occupato {
-  pointer-events: none;
-}
-
 .cal-day.selezionato-checkin,
 .cal-day.selezionato-checkout {
   background-color: #25d366 !important;
