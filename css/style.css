@@ -1334,3 +1334,16 @@ footer p {
     justify-content: center;
   }
 }
+
+/* Avviso errore caricamento calendario */
+.cal-avviso-errore {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: center;
+}
