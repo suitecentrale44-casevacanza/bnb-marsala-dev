@@ -157,6 +157,40 @@ button:focus-visible,
   font-size: 1.5rem;
 }
 
+/* ==========================================
+   16. RECENSIONI IN EVIDENZA (TESTIMONIANZE)
+   ========================================== */
+.recensioni-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.recensione-card {
+  border-left-color: var(--giallo-limone);
+}
+
+.recensione-stelle {
+  color: var(--giallo-limone);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.6rem;
+}
+
+.recensione-titolo {
+  margin-bottom: 0.6rem;
+}
+
+.recensione-testo {
+  color: var(--blu-notte-testo);
+  line-height: 1.6;
+}
+
+.recensione-autore {
+  margin-top: 0.8rem;
+  font-weight: 600;
+  color: var(--grigio-testo-muto);
+  font-style: italic;
+}
+
 ul {
   list-style: none;
 }
