@@ -188,6 +188,7 @@ const configurazioneCalendari = {
 const cachePrenotazioni = {};
 const statoMeseCalendario = {};
 const selezioneDate = {};
+const statoErroreCaricamento = {};
 
 function calcolaGiornoSuccessivo(dataStr) {
   const d = new Date(dataStr + 'T00:00:00');
@@ -215,24 +216,46 @@ async function scaricaIcalConTimeout(urlProxy, timeoutMs = 6000) {
   }
 }
 
+/*
+  IMPORTANTE: dopo aver creato il tuo Worker su Cloudflare (vedi file
+  cloudflare-worker-calendari.js per le istruzioni), incolla qui sotto
+  l'URL che ti ha dato Cloudflare, al posto della stringa vuota.
+  Esempio: 'https://calendari-suitecentrale44.tuonome.workers.dev'
+*/
+const URL_WORKER_PERSONALE = ''; // <-- INCOLLA_QUI_URL_WORKER
+
 async function scaricaIcalVeloce(icalUrl) {
   const urlPulito = decodeURIComponent(icalUrl);
   const bustCache = `_=${Date.now()}`;
   const urlConAntiCache = urlPulito.includes('?') ? `${urlPulito}&${bustCache}` : `${urlPulito}?${bustCache}`;
-  const proxies = [
+
+  const proxies = [];
+
+  // 1. Priorità massima: il tuo Worker personale, se lo hai configurato
+  if (URL_WORKER_PERSONALE) {
+    proxies.push(`${URL_WORKER_PERSONALE}?url=${encodeURIComponent(urlConAntiCache)}`);
+  }
+
+  // 2. Riserva di emergenza: proxy pubblici (usati solo se il Worker non è configurato o non risponde)
+  proxies.push(
     `https://api.allorigins.win/raw?url=${encodeURIComponent(urlConAntiCache)}`,
     `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlConAntiCache)}`,
-    `https://corsproxy.io/?${encodeURIComponent(urlConAntiCache)}`
-  ];
+    `https://corsproxy.io/?url=${encodeURIComponent(urlConAntiCache)}`
+  );
 
   for (const proxy of proxies) {
     try {
       const testo = await scaricaIcalConTimeout(proxy, 6000);
-      if (testo) return testo;
+      if (testo) {
+        console.info('[Calendario] Dati scaricati con successo da:', proxy.split('?')[0]);
+        return testo;
+      }
     } catch (e) {
+      console.warn('[Calendario] Proxy fallito:', proxy.split('?')[0], '-', e.message);
       continue;
     }
   }
+  console.error('[Calendario] TUTTI i proxy hanno fallito per:', urlPulito);
   return null;
 }
 
@@ -244,12 +267,15 @@ async function caricaEUnisciDateSuite(nomeSuite) {
   const risultati = await Promise.all(promesse);
 
   let tutteLeDate = [];
+  let almenoUnRisultatoValido = false;
   risultati.forEach(textICS => {
     if (textICS) {
+      almenoUnRisultatoValido = true;
       tutteLeDate = tutteLeDate.concat(estraiDateDaICS(textICS));
     }
   });
 
+  statoErroreCaricamento[nomeSuite] = !almenoUnRisultatoValido;
   cachePrenotazioni[nomeSuite] = tutteLeDate;
   return tutteLeDate;
 }
@@ -446,8 +472,14 @@ function renderizzaGrigliaCalendario(nomeSuite) {
   const nomiMesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", 
                     "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
 
+  const erroreCaricamento = statoErroreCaricamento[nomeSuite] === true;
+  const avvisoErrore = erroreCaricamento
+    ? `<div class="cal-avviso-errore">⚠️ Impossibile verificare la disponibilità in tempo reale. Le date mostrate come libere potrebbero non esserlo: contattaci prima di prenotare.</div>`
+    : '';
+
   let html = `
     <div class="cal-native-container">
+      ${avvisoErrore}
       <div class="cal-header">
         <button type="button" onclick="cambiaMeseSuite('${nomeSuite}', -1)">❮</button>
         <h4>${nomiMesi[mese]} ${anno}</h4>
