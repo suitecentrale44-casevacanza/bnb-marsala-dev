@@ -198,12 +198,12 @@ function calcolaGiornoSuccessivo(dataStr) {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-async function scaricaIcalConTimeout(urlProxy, timeoutMs = 2000) {
+async function scaricaIcalConTimeout(urlProxy, timeoutMs = 6000) {
   const controller = new AbortController();
   const idTimer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const res = await fetch(urlProxy, { signal: controller.signal });
+    const res = await fetch(urlProxy, { signal: controller.signal, cache: 'no-store' });
     clearTimeout(idTimer);
     if (!res.ok) throw new Error("HTTP Errore");
     const text = await res.text();
@@ -217,15 +217,17 @@ async function scaricaIcalConTimeout(urlProxy, timeoutMs = 2000) {
 
 async function scaricaIcalVeloce(icalUrl) {
   const urlPulito = decodeURIComponent(icalUrl);
+  const bustCache = `_=${Date.now()}`;
+  const urlConAntiCache = urlPulito.includes('?') ? `${urlPulito}&${bustCache}` : `${urlPulito}?${bustCache}`;
   const proxies = [
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(urlPulito)}`,
-    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlPulito)}`,
-    `https://corsproxy.io/?${encodeURIComponent(urlPulito)}`
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(urlConAntiCache)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlConAntiCache)}`,
+    `https://corsproxy.io/?${encodeURIComponent(urlConAntiCache)}`
   ];
 
   for (const proxy of proxies) {
     try {
-      const testo = await scaricaIcalConTimeout(proxy, 2000);
+      const testo = await scaricaIcalConTimeout(proxy, 6000);
       if (testo) return testo;
     } catch (e) {
       continue;
