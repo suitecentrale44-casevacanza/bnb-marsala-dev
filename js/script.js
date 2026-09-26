@@ -199,85 +199,41 @@ function calcolaGiornoSuccessivo(dataStr) {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-async function scaricaIcalConTimeout(urlProxy, timeoutMs = 6000) {
-  const controller = new AbortController();
-  const idTimer = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    const res = await fetch(urlProxy, { signal: controller.signal, cache: 'no-store' });
-    clearTimeout(idTimer);
-    if (!res.ok) throw new Error("HTTP Errore");
-    const text = await res.text();
-    if (text && text.includes("BEGIN:VCALENDAR")) return text;
-    throw new Error("Formato non valido");
-  } catch (err) {
-    clearTimeout(idTimer);
-    throw err;
-  }
-}
-
 /*
-  IMPORTANTE: dopo aver creato il tuo Worker su Cloudflare (vedi file
-  cloudflare-worker-calendari.js per le istruzioni), incolla qui sotto
-  l'URL che ti ha dato Cloudflare, al posto della stringa vuota.
-  Esempio: 'https://calendari-suitecentrale44.tuonome.workers.dev'
+  I dati di disponibilità NON vengono più scaricati dal browser tramite
+  proxy esterni (spesso instabili). Vengono invece scaricati da una
+  GitHub Action ogni 20 minuti e salvati in calendari.json nello stesso
+  repository: il sito legge quel file, che è sullo stesso dominio,
+  quindi nessun problema di CORS e nessuna dipendenza da servizi terzi.
+  Vedi: .github/workflows/aggiorna-calendari.yml e scripts/aggiorna-calendari.js
 */
-const URL_WORKER_PERSONALE = ''; // <-- INCOLLA_QUI_URL_WORKER
+let datiCalendariCache = null;
 
-async function scaricaIcalVeloce(icalUrl) {
-  const urlPulito = decodeURIComponent(icalUrl);
-  const bustCache = `_=${Date.now()}`;
-  const urlConAntiCache = urlPulito.includes('?') ? `${urlPulito}&${bustCache}` : `${urlPulito}?${bustCache}`;
-
-  const proxies = [];
-
-  // 1. Priorità massima: il tuo Worker personale, se lo hai configurato
-  if (URL_WORKER_PERSONALE) {
-    proxies.push(`${URL_WORKER_PERSONALE}?url=${encodeURIComponent(urlConAntiCache)}`);
+async function caricaFileCalendariJson() {
+  if (datiCalendariCache) return datiCalendariCache;
+  try {
+    const res = await fetch(`calendari.json?_=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    datiCalendariCache = await res.json();
+    return datiCalendariCache;
+  } catch (err) {
+    console.error('[Calendario] Impossibile leggere calendari.json:', err.message);
+    return null;
   }
-
-  // 2. Riserva di emergenza: proxy pubblici (usati solo se il Worker non è configurato o non risponde)
-  proxies.push(
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(urlConAntiCache)}`,
-    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlConAntiCache)}`,
-    `https://corsproxy.io/?url=${encodeURIComponent(urlConAntiCache)}`
-  );
-
-  for (const proxy of proxies) {
-    try {
-      const testo = await scaricaIcalConTimeout(proxy, 6000);
-      if (testo) {
-        console.info('[Calendario] Dati scaricati con successo da:', proxy.split('?')[0]);
-        return testo;
-      }
-    } catch (e) {
-      console.warn('[Calendario] Proxy fallito:', proxy.split('?')[0], '-', e.message);
-      continue;
-    }
-  }
-  console.error('[Calendario] TUTTI i proxy hanno fallito per:', urlPulito);
-  return null;
 }
 
 async function caricaEUnisciDateSuite(nomeSuite) {
-  const config = configurazioneCalendari[nomeSuite];
-  if (!config) return [];
+  const dati = await caricaFileCalendariJson();
 
-  const promesse = config.icalUrls.map(url => scaricaIcalVeloce(url));
-  const risultati = await Promise.all(promesse);
+  if (!dati || !Array.isArray(dati[nomeSuite])) {
+    statoErroreCaricamento[nomeSuite] = true;
+    cachePrenotazioni[nomeSuite] = [];
+    return [];
+  }
 
-  let tutteLeDate = [];
-  let almenoUnRisultatoValido = false;
-  risultati.forEach(textICS => {
-    if (textICS) {
-      almenoUnRisultatoValido = true;
-      tutteLeDate = tutteLeDate.concat(estraiDateDaICS(textICS));
-    }
-  });
-
-  statoErroreCaricamento[nomeSuite] = !almenoUnRisultatoValido;
-  cachePrenotazioni[nomeSuite] = tutteLeDate;
-  return tutteLeDate;
+  statoErroreCaricamento[nomeSuite] = dati[nomeSuite + '_errore'] === true;
+  cachePrenotazioni[nomeSuite] = dati[nomeSuite];
+  return dati[nomeSuite];
 }
 
 async function precaricaTuttiICalInSilenzio() {
@@ -285,28 +241,6 @@ async function precaricaTuttiICalInSilenzio() {
     statoMeseCalendario[key] = new Date();
     caricaEUnisciDateSuite(key);
   }
-}
-
-function estraiDateDaICS(icsText) {
-  const intervalli = [];
-  if (!icsText) return intervalli;
-
-  const eventi = icsText.split("BEGIN:VEVENT");
-
-  eventi.forEach(evt => {
-    const startMatch = evt.match(/DTSTART[^:]*:(\d{8})/);
-    const endMatch = evt.match(/DTEND[^:]*:(\d{8})/);
-
-    if (startMatch && endMatch) {
-      const s = startMatch[1];
-      const e = endMatch[1];
-      const da = `${s.substring(0,4)}-${s.substring(4,6)}-${s.substring(6,8)}`;
-      const a = `${e.substring(0,4)}-${e.substring(4,6)}-${e.substring(6,8)}`;
-      intervalli.push({ da, a });
-    }
-  });
-
-  return intervalli;
 }
 
 window.apriCalendario = async function(idDelPopup, nomeSuite) {
