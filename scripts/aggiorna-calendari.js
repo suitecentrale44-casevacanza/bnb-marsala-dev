@@ -1,0 +1,35 @@
+name: Aggiorna calendari disponibilità
+
+# Si avvia da solo ogni 20 minuti, e puoi anche avviarlo a mano
+# dalla scheda "Actions" del repository ("Run workflow").
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+# Serve per permettere all'Action di scrivere (commit) il file calendari.json
+permissions:
+  contents: write
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il codice del repository
+        uses: actions/checkout@v4
+
+      - name: Prepara Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Scarica i calendari da Google e genera data/calendari.json
+        run: node scripts/aggiorna-calendari.js
+
+      - name: Salva data/calendari.json nel repository (solo se è cambiato)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/calendari.json
+          git diff --staged --quiet || git commit -m "Aggiornamento automatico calendari disponibilità"
+          git push
