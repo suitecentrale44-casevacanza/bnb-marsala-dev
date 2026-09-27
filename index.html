@@ -14,14 +14,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Suite Centrale 44 a Marsala: case vacanza nel centro storico con Wi-Fi, aria condizionata e ogni comfort. Prenota ora la tua vacanza in Sicilia!">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0077b6">
   <title>Suite Centrale 44 - Case Vacanza a Marsala</title>
-
-  <link rel="canonical" href="https://suitecentrale44-casevacanza.github.io/bnb-marsala/">
+  
   <link rel="icon" type="image/jpeg" href="image/Logo_Suite.jpg">
-  <link rel="apple-touch-icon" href="image/Logo_Suite.jpg">
-  <link rel="preconnect" href="https://flagcdn.com">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/script.js" defer></script>
 
@@ -29,51 +24,18 @@
   <meta property="og:title" content="Suite Centrale 44 - Case Vacanza a Marsala">
   <meta property="og:description" content="La tua casa lontano da casa. Relax, comfort e accoglienza nel cuore di Marsala.">
   <meta property="og:image" content="image/Logo_Suite.jpg">
-  <meta property="og:url" content="https://suitecentrale44-casevacanza.github.io/bnb-marsala/">
-  <meta property="og:locale" content="it_IT">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Suite Centrale 44 - Case Vacanza a Marsala">
-  <meta name="twitter:description" content="La tua casa lontano da casa. Relax, comfort e accoglienza nel cuore di Marsala.">
-  <meta name="twitter:image" content="image/Logo_Suite.jpg">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LodgingBusiness",
-    "name": "Suite Centrale 44",
-    "image": "image/Logo_Suite.jpg",
-    "description": "Case vacanza nel centro storico di Marsala con Wi-Fi, aria condizionata e ogni comfort.",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Via Giuseppe Garraffa 44",
-      "addressLocality": "Marsala",
-      "addressRegion": "TP",
-      "addressCountry": "IT"
-    },
-    "telephone": "+393477640421",
-    "email": "suitecentrale44@gmail.com",
-    "priceRange": "€€"
-  }
-  </script>
 </head>
 <body>
-  <noscript>
-    <div style="background:#fee2e2;color:#991b1b;text-align:center;padding:12px;font-family:sans-serif;">
-      Per usare tutte le funzioni di questo sito (calendari, gallerie, menu) è necessario abilitare JavaScript.
-    </div>
-  </noscript>
-
-  <a href="#main-content" class="skip-link">Vai al contenuto principale</a>
 
   <!-- Banner Cookie GDPR -->
-  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Informativa cookie">
-    <p class="cookie-testo">
+  <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; color: #ffffff; padding: 16px; text-align: center; z-index: 999999; font-family: sans-serif; font-size: 14px; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+    <p style="margin: 0 0 12px 0; line-height: 1.4;">
       Questo sito utilizza cookie tecnici e Google Analytics per migliorare l'esperienza di navigazione. Puoi scegliere se accettare o rifiutare i cookie di analisi.
     </p>
-    <button type="button" onclick="accettaCookie()" class="btn-cookie btn-cookie-accetta">
+    <button onclick="accettaCookie()" style="background: #25D366; color: white; border: none; padding: 8px 18px; margin-right: 8px; cursor: pointer; border-radius: 6px; font-weight: bold;">
       Accetta
     </button>
-    <button type="button" onclick="rifiutaCookie()" class="btn-cookie btn-cookie-rifiuta">
+    <button onclick="rifiutaCookie()" style="background: #64748b; color: white; border: none; padding: 8px 18px; cursor: pointer; border-radius: 6px;">
       Rifiuta
     </button>
   </div>
@@ -129,7 +91,6 @@
           <li><a href="#offerte" onclick="chiudiMainMenu()">Offerte</a></li>
           <li><a href="#servizi" onclick="chiudiMainMenu()">Servizi</a></li>
           <li><a href="#riconoscimenti" onclick="chiudiMainMenu()">Riconoscimenti Ufficiali</a></li>
-          <li><a href="#testimonianze" onclick="chiudiMainMenu()">Recensioni Ospiti</a></li>
           <li><a href="#posizione" onclick="chiudiMainMenu()">Posizione e Contatti</a></li>
           <li><a href="https://share.google/YokKWe5qbWBurajf4" target="_blank" rel="noopener noreferrer" onclick="chiudiMainMenu()">Lascia una recensione</a></li>
         </ul>
@@ -145,7 +106,7 @@
     <p class="header-desc">La tua casa lontano da casa. Relax, comfort e accoglienza nel cuore della città</p>
   </header>
 
-  <main class="container" id="main-content">
+  <main class="container">
     <!-- Sezione Strutture -->
     <section id="strutture" class="section">
       <h2>🏠 Le Nostre Strutture</h2>
@@ -163,7 +124,7 @@
             <div class="img-wrapper">
               <img src="image/Suite Centrale Copertina.jpg" alt="Suite Centrale 44">
               <div class="img-overlay">
-                <button onclick="apriGalleria('centrale')" class="btn-foto">📸 Guarda tutte le foto</button>
+                <button onclick="apriGalleria('centrale')" class="btn-foto" style="border:none; cursor:pointer; width:100%;">📸 Guarda tutte le foto</button>
               </div>
             </div>
             <h3>Suite Centrale 44</h3>
@@ -181,7 +142,7 @@
             <div class="img-wrapper">
               <img src="image/Suite Corallo Copertina.jpg" alt="Suite Corallo">
               <div class="img-overlay">
-                <button onclick="apriGalleria('corallo')" class="btn-foto">📸 Guarda tutte le foto</button>
+                <button onclick="apriGalleria('corallo')" class="btn-foto" style="border:none; cursor:pointer; width:100%;">📸 Guarda tutte le foto</button>
               </div>
             </div>
             <h3>Suite Corallo</h3>
@@ -199,7 +160,7 @@
             <div class="img-wrapper">
               <img src="image/Suite Oceano Copertina.jpg" alt="Suite Oceano">
               <div class="img-overlay">
-                <button onclick="apriGalleria('oceano')" class="btn-foto">📸 Guarda tutte le foto</button>
+                <button onclick="apriGalleria('oceano')" class="btn-foto" style="border:none; cursor:pointer; width:100%;">📸 Guarda tutte le foto</button>
               </div>
             </div>
             <h3>Suite Oceano</h3>
@@ -266,51 +227,26 @@
     <!-- RICONOSCIMENTI UFFICIALI -->
     <section id="riconoscimenti" class="section">
       <h2>🏆 Riconoscimenti ufficiali</h2>
-      <p class="testo-secondario">I traguardi e i badge di eccellenza riconosciuti negli anni dai nostri partner ufficiali:</p>
+      <p style="margin-bottom: 1rem; color: #64748b;">I traguardi e i badge di eccellenza riconosciuti negli anni dai nostri partner ufficiali:</p>
 
       <div class="grid-3-case">
-        <div class="card card-badge card-badge-airbnb">
-          <h3>Airbnb</h3>
-          <div class="badge-img-wrapper">
-            <img src="image/badge-airbnb.png" alt="Airbnb Awards" loading="lazy" class="badge-img">
+        <div class="card" style="text-align: center; border-left-color: #ff385c;">
+          <h3 style="color: #ff385c;">Airbnb</h3>
+          <div style="margin: 1rem 0;">
+            <img src="image/badge-airbnb.png" alt="Airbnb Awards" style="max-width: 140px; height: auto;">
           </div>
           <p><strong>Superhost & Amato dagli ospiti</strong></p>
-          <p class="testo-secondario">Premio per la qualità dell'ospitalità e le valutazioni eccellenti ottenute dagli ospiti negli anni.</p>
+          <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Premio per la qualità dell'ospitalità e le valutazioni eccellenti ottenute dagli ospiti negli anni.</p>
         </div>
 
-        <div class="card card-badge card-badge-booking">
-          <h3>Booking.com</h3>
-          <div class="badge-img-wrapper">
-            <img src="image/badge-booking.png" alt="Booking Traveller Review Awards" loading="lazy" class="badge-img">
+        <div class="card" style="text-align: center; border-left-color: #003580;">
+          <h3 style="color: #003580;">Booking.com</h3>
+          <div style="margin: 1rem 0;">
+            <img src="image/badge-booking.png" alt="Booking Traveller Review Awards" style="max-width: 140px; height: auto;">
           </div>
           <p><strong>Traveller Review Awards</strong></p>
-          <p class="testo-secondario">Riconoscimento annuale per aver mantenuto punteggi e recensioni di alto livello.</p>
+          <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Riconoscimento annuale per aver mantenuto punteggi e recensioni di alto livello.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- Sezione Recensioni in Evidenza -->
-    <section id="testimonianze" class="section">
-      <h2>💬 Cosa Dicono i Nostri Ospiti</h2>
-      <div class="grid recensioni-grid">
-        <article class="card recensione-card">
-          <div class="recensione-stelle">★★★★★</div>
-          <h3 class="recensione-titolo">Monolocale in pieno centro storico, silenzioso</h3>
-          <p class="recensione-testo">Ottimo appartamento situato vicino al centro di Marsala. La signora Paola è stata super disponibile a spiegarci con pazienza come ambientarci meglio a Marsala consigliandoci attività e luoghi. Ci ha dato un comodo PDF con le indicazioni per parcheggi, ristoranti, spiagge e lavanderie... L'appartamento era impeccabile, pulitissimo e molto bello. Un meritato grazie a Paola, alla prossima 🙋‍♀️</p>
-        </article>
-
-        <article class="card recensione-card">
-          <div class="recensione-stelle">★★★★★</div>
-          <h3 class="recensione-titolo">Monolocale in centro storico, silenzioso - Corallo</h3>
-          <p class="recensione-testo">Soggiorno fantastico a Marsala! Appartamento pulitissimo e curato in ogni dettaglio, dotato di tutti i comfort necessari: aria condizionata, cucina completamente attrezzata e tutto il necessario per un soggiorno senza pensieri.</p>
-        </article>
-
-        <article class="card recensione-card">
-          <div class="recensione-stelle">★★★★★</div>
-          <h3 class="recensione-titolo">Monolocale in pieno centro storico, silenzioso</h3>
-          <p class="recensione-testo">Una padrona di casa speciale, gentile, disponibile, semplicemente una persona fantastica. Ho potuto entrare nell'appartamento 6 ore prima del previsto e fare il check-out 4 ore più tardi del previsto. La comunicazione con Paola è stata molto piacevole, devo dire che non mi è mancato nulla, è stata la mia migliore esperienza con Airbnb finora 10/10, grazie Paola😘</p>
-          <p class="recensione-autore">— Yasser</p>
-        </article>
       </div>
     </section>
 
@@ -338,7 +274,7 @@
       
       <div id="contatti">
         <p><strong>Indirizzo:</strong> Via Giuseppe Garraffa 44, Marsala (TP)</p>
-        <p class="testo-secondario codici-legali">
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.2rem;">
           CIR: 19081011C218331 | CIN: IT081011C2EFH98HIF
         </p>
 
@@ -380,7 +316,7 @@
   </footer>
 
   <!-- SCRIPT LINGUA GOOGLE -->
-  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
   <!-- ==========================================
@@ -392,7 +328,7 @@
   <div id="popup-centrale" class="modal-calendario">
     <div class="modal-contenuto">
       <span class="chiudi-popup" onclick="chiudiCalendario('popup-centrale')">&times;</span>
-      <h3 class="titolo-modal-calendario">Disponibilità Suite Centrale</h3>
+      <h3 style="margin-bottom: 15px; color: var(--blu-mare); text-align: center;">Disponibilità Suite Centrale</h3>
       <div id="cal-centrale" class="calendario-wrapper"></div>
       <div class="box-richiesta-wa">
         <p id="info-selezione-centrale" class="titolo-richiesta">👉 Clicca sui giorni liberi nel calendario per scegliere Check-in e Check-out</p>
@@ -405,7 +341,7 @@
   <div id="popup-corallo" class="modal-calendario">
     <div class="modal-contenuto">
       <span class="chiudi-popup" onclick="chiudiCalendario('popup-corallo')">&times;</span>
-      <h3 class="titolo-modal-calendario">Disponibilità Suite Corallo</h3>
+      <h3 style="margin-bottom: 15px; color: var(--blu-mare); text-align: center;">Disponibilità Suite Corallo</h3>
       <div id="cal-corallo" class="calendario-wrapper"></div>
       <div class="box-richiesta-wa">
         <p id="info-selezione-corallo" class="titolo-richiesta">👉 Clicca sui giorni liberi nel calendario per scegliere Check-in e Check-out</p>
@@ -418,7 +354,7 @@
   <div id="popup-oceano" class="modal-calendario">
     <div class="modal-contenuto">
       <span class="chiudi-popup" onclick="chiudiCalendario('popup-oceano')">&times;</span>
-      <h3 class="titolo-modal-calendario">Disponibilità Suite Oceano</h3>
+      <h3 style="margin-bottom: 15px; color: var(--blu-mare); text-align: center;">Disponibilità Suite Oceano</h3>
       <div id="cal-oceano" class="calendario-wrapper"></div>
       <div class="box-richiesta-wa">
         <p id="info-selezione-oceano" class="titolo-richiesta">👉 Clicca sui giorni liberi nel calendario per scegliere Check-in e Check-out</p>
@@ -430,7 +366,7 @@
   <!-- FINESTRA GALLERIA UNIFICATA -->
   <div id="modal-galleria" class="modal-galleria">
     <div class="modal-header">
-      <h2 id="titolo-galleria" class="titolo-galleria-modal">Galleria Foto</h2>
+      <h2 id="titolo-galleria" style="color: white; margin: 0; font-size: 1.5rem;">Galleria Foto</h2>
       <span class="modal-close" onclick="chiudiGalleria()">&times;</span>
     </div>
     <div id="galleria-griglia" class="galleria-griglia"></div>
