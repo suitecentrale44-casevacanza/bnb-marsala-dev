@@ -188,6 +188,7 @@ const configurazioneCalendari = {
 const cachePrenotazioni = {};
 const statoMeseCalendario = {};
 const selezioneDate = {};
+const statoErroreCaricamento = {};
 
 function calcolaGiornoSuccessivo(dataStr) {
   const d = new Date(dataStr + 'T00:00:00');
@@ -198,58 +199,42 @@ function calcolaGiornoSuccessivo(dataStr) {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-async function scaricaIcalConTimeout(urlProxy, timeoutMs = 2000) {
-  const controller = new AbortController();
-  const idTimer = setTimeout(() => controller.abort(), timeoutMs);
+/*
+  I dati di disponibilità NON vengono più scaricati dal browser tramite
+  proxy esterni (spesso instabili). Vengono invece scaricati da una
+  GitHub Action ogni 20 minuti e salvati in data/calendari.json nello
+  stesso repository: il sito legge quel file, che è sullo stesso
+  dominio, quindi nessun problema di CORS e nessuna dipendenza da
+  servizi terzi. Vedi: .github/workflows/aggiorna-calendari.yml
+  e scripts/aggiorna-calendari.js
+*/
+let datiCalendariCache = null;
 
+async function caricaFileCalendariJson() {
+  if (datiCalendariCache) return datiCalendariCache;
   try {
-    const res = await fetch(urlProxy, { signal: controller.signal });
-    clearTimeout(idTimer);
-    if (!res.ok) throw new Error("HTTP Errore");
-    const text = await res.text();
-    if (text && text.includes("BEGIN:VCALENDAR")) return text;
-    throw new Error("Formato non valido");
+    const res = await fetch(`data/calendari.json?_=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    datiCalendariCache = await res.json();
+    return datiCalendariCache;
   } catch (err) {
-    clearTimeout(idTimer);
-    throw err;
+    console.error('[Calendario] Impossibile leggere data/calendari.json:', err.message);
+    return null;
   }
-}
-
-async function scaricaIcalVeloce(icalUrl) {
-  const urlPulito = decodeURIComponent(icalUrl);
-  const proxies = [
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(urlPulito)}`,
-    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlPulito)}`,
-    `https://corsproxy.io/?${encodeURIComponent(urlPulito)}`
-  ];
-
-  for (const proxy of proxies) {
-    try {
-      const testo = await scaricaIcalConTimeout(proxy, 2000);
-      if (testo) return testo;
-    } catch (e) {
-      continue;
-    }
-  }
-  return null;
 }
 
 async function caricaEUnisciDateSuite(nomeSuite) {
-  const config = configurazioneCalendari[nomeSuite];
-  if (!config) return [];
+  const dati = await caricaFileCalendariJson();
 
-  const promesse = config.icalUrls.map(url => scaricaIcalVeloce(url));
-  const risultati = await Promise.all(promesse);
+  if (!dati || !Array.isArray(dati[nomeSuite])) {
+    statoErroreCaricamento[nomeSuite] = true;
+    cachePrenotazioni[nomeSuite] = [];
+    return [];
+  }
 
-  let tutteLeDate = [];
-  risultati.forEach(textICS => {
-    if (textICS) {
-      tutteLeDate = tutteLeDate.concat(estraiDateDaICS(textICS));
-    }
-  });
-
-  cachePrenotazioni[nomeSuite] = tutteLeDate;
-  return tutteLeDate;
+  statoErroreCaricamento[nomeSuite] = dati[nomeSuite + '_errore'] === true;
+  cachePrenotazioni[nomeSuite] = dati[nomeSuite];
+  return dati[nomeSuite];
 }
 
 async function precaricaTuttiICalInSilenzio() {
@@ -257,28 +242,6 @@ async function precaricaTuttiICalInSilenzio() {
     statoMeseCalendario[key] = new Date();
     caricaEUnisciDateSuite(key);
   }
-}
-
-function estraiDateDaICS(icsText) {
-  const intervalli = [];
-  if (!icsText) return intervalli;
-
-  const eventi = icsText.split("BEGIN:VEVENT");
-
-  eventi.forEach(evt => {
-    const startMatch = evt.match(/DTSTART[^:]*:(\d{8})/);
-    const endMatch = evt.match(/DTEND[^:]*:(\d{8})/);
-
-    if (startMatch && endMatch) {
-      const s = startMatch[1];
-      const e = endMatch[1];
-      const da = `${s.substring(0,4)}-${s.substring(4,6)}-${s.substring(6,8)}`;
-      const a = `${e.substring(0,4)}-${e.substring(4,6)}-${e.substring(6,8)}`;
-      intervalli.push({ da, a });
-    }
-  });
-
-  return intervalli;
 }
 
 window.apriCalendario = async function(idDelPopup, nomeSuite) {
@@ -444,8 +407,14 @@ function renderizzaGrigliaCalendario(nomeSuite) {
   const nomiMesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", 
                     "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
 
+  const erroreCaricamento = statoErroreCaricamento[nomeSuite] === true;
+  const avvisoErrore = erroreCaricamento
+    ? `<div class="cal-avviso-errore">⚠️ Impossibile verificare la disponibilità in tempo reale. Le date mostrate come libere potrebbero non esserlo: contattaci prima di prenotare.</div>`
+    : '';
+
   let html = `
     <div class="cal-native-container">
+      ${avvisoErrore}
       <div class="cal-header">
         <button type="button" onclick="cambiaMeseSuite('${nomeSuite}', -1)">❮</button>
         <h4>${nomiMesi[mese]} ${anno}</h4>
