@@ -525,7 +525,7 @@ header .header-desc {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #25d366;
+  background-color: #25D366;
   color: #ffffff !important;
   font-size: 0.9rem;
   font-weight: 700;
@@ -675,7 +675,7 @@ header .header-desc {
   flex: 1 1 auto;
 }
 
-.btn-wa { background-color: #25d366; }
+.btn-wa { background-color: #25D366; }
 .btn-wa:hover { background-color: #1eb954; transform: translateY(-2px); }
 
 .btn-airbnb-official { background-color: #ff385c; }
@@ -837,7 +837,7 @@ footer p {
   right: 20px;
   width: 60px;
   height: 60px;
-  background-color: #25d366;
+  background-color: #25D366;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -876,7 +876,7 @@ footer p {
 }
 
 .btn-invia-wa {
-  background-color: #25d366;
+  background-color: #25D366;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -1256,7 +1256,7 @@ footer p {
    ========================================== */
 .cal-day.selezionato-checkin,
 .cal-day.selezionato-checkout {
-  background-color: #25d366 !important;
+  background-color: #25D366 !important;
   color: #ffffff !important;
   font-weight: bold;
   border-radius: 6px;
