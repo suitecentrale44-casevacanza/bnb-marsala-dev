@@ -160,10 +160,11 @@
           
           <!-- CARD SUITE CENTRALE -->
           <article class="card-casa">
-            <div class="img-wrapper">
+            <div class="img-wrapper" onclick="apriGalleria('centrale')" role="button" tabindex="0" aria-label="Guarda tutte le foto di Suite Centrale 44" onkeypress="if(event.key==='Enter')apriGalleria('centrale')">
               <img src="image/Suite Centrale Copertina.jpg" alt="Suite Centrale 44">
+              <span class="badge-galleria">📸 Vedi tutte le foto</span>
               <div class="img-overlay">
-                <button onclick="apriGalleria('centrale')" class="btn-foto">📸 Guarda tutte le foto</button>
+                <button onclick="event.stopPropagation(); apriGalleria('centrale')" class="btn-foto">📸 Guarda tutte le foto</button>
               </div>
             </div>
             <h3>Suite Centrale 44</h3>
@@ -178,10 +179,11 @@
           
           <!-- CARD CORALLO -->
           <article class="card-casa">
-            <div class="img-wrapper">
+            <div class="img-wrapper" onclick="apriGalleria('corallo')" role="button" tabindex="0" aria-label="Guarda tutte le foto di Suite Corallo" onkeypress="if(event.key==='Enter')apriGalleria('corallo')">
               <img src="image/Suite Corallo Copertina.jpg" alt="Suite Corallo">
+              <span class="badge-galleria">📸 Vedi tutte le foto</span>
               <div class="img-overlay">
-                <button onclick="apriGalleria('corallo')" class="btn-foto">📸 Guarda tutte le foto</button>
+                <button onclick="event.stopPropagation(); apriGalleria('corallo')" class="btn-foto">📸 Guarda tutte le foto</button>
               </div>
             </div>
             <h3>Suite Corallo</h3>
@@ -196,10 +198,11 @@
           
           <!-- CARD OCEANO -->
           <article class="card-casa">
-            <div class="img-wrapper">
+            <div class="img-wrapper" onclick="apriGalleria('oceano')" role="button" tabindex="0" aria-label="Guarda tutte le foto di Suite Oceano" onkeypress="if(event.key==='Enter')apriGalleria('oceano')">
               <img src="image/Suite Oceano Copertina.jpg" alt="Suite Oceano">
+              <span class="badge-galleria">📸 Vedi tutte le foto</span>
               <div class="img-overlay">
-                <button onclick="apriGalleria('oceano')" class="btn-foto">📸 Guarda tutte le foto</button>
+                <button onclick="event.stopPropagation(); apriGalleria('oceano')" class="btn-foto">📸 Guarda tutte le foto</button>
               </div>
             </div>
             <h3>Suite Oceano</h3>
