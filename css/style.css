@@ -576,6 +576,7 @@ header .header-desc {
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 0.8rem;
+  cursor: pointer;
 }
 
 .img-wrapper img {
@@ -583,6 +584,30 @@ header .header-desc {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.badge-galleria {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(29, 53, 87, 0.85);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 20px;
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  animation: respiro-badge 2.5s ease-in-out infinite;
+}
+
+@keyframes respiro-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.img-wrapper:hover .badge-galleria {
+  opacity: 0;
 }
 
 .img-overlay {
