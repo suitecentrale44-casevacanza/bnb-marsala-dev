@@ -544,48 +544,57 @@ window.apriGalleria = async function(nomeSuite) {
   document.body.style.overflow = 'hidden';
 
   let numeroInizio = 0;
-  const DIMENSIONE_LOTTO = 10;
+  const DIMENSIONE_LOTTO = 12;
   let continuaScansione = true;
   let trovataAlmenoUna = false;
 
   while (continuaScansione) {
     if (sessioneGalleriaId !== sessioneCorrente) return;
 
-    const promesseLotto = [];
+    // Segnaposto creati subito, nell'ordine giusto: la griglia si riempie
+    // via via che ogni foto è pronta, senza aspettare tutto il lotto.
+    const placeholders = [];
     for (let i = 0; i < DIMENSIONE_LOTTO; i++) {
-      const idx = numeroInizio + i;
-      promesseLotto.push(
-        cercaPrimoFormatoValido(config.cartella, idx).then(percorso => ({ idx, percorso }))
-      );
+      const div = document.createElement('div');
+      div.className = 'thumb-placeholder';
+      placeholders.push(div);
     }
 
-    const risultati = await Promise.all(promesseLotto);
+    if (numeroInizio === 0) griglia.innerHTML = '';
+    placeholders.forEach(div => griglia.appendChild(div));
 
+    const promesseLotto = placeholders.map((div, i) => {
+      const idx = numeroInizio + i;
+      return cercaPrimoFormatoValido(config.cartella, idx).then(percorso => {
+        if (sessioneGalleriaId !== sessioneCorrente) return { idx, percorso };
+
+        if (percorso) {
+          trovataAlmenoUna = true;
+          playlistFotoAttuale[idx] = percorso;
+
+          const imgThumb = document.createElement('img');
+          imgThumb.src = percorso;
+          imgThumb.loading = "lazy";
+          imgThumb.decoding = "async";
+          imgThumb.alt = `${config.titolo} - Foto ${idx}`;
+          imgThumb.onclick = () => apriFotoEspansa(idx);
+          div.replaceWith(imgThumb);
+        } else {
+          div.remove();
+        }
+
+        return { idx, percorso };
+      });
+    });
+
+    const risultati = await Promise.all(promesseLotto);
     if (sessioneGalleriaId !== sessioneCorrente) return;
 
     risultati.sort((a, b) => a.idx - b.idx);
-
-    let trovateNelLotto = 0;
+    const trovateNelLotto = risultati.filter(r => r.percorso).length;
 
     for (const item of risultati) {
-      if (item.percorso) {
-        trovateNelLotto++;
-        if (!trovataAlmenoUna) {
-          trovataAlmenoUna = true;
-          griglia.innerHTML = '';
-        }
-
-        const indexInLista = playlistFotoAttuale.length;
-        playlistFotoAttuale.push(item.percorso);
-
-        const imgThumb = document.createElement('img');
-        imgThumb.src = item.percorso;
-        imgThumb.loading = "lazy";
-        imgThumb.decoding = "async";
-        imgThumb.alt = `${config.titolo} - Foto ${item.idx}`;
-        imgThumb.onclick = () => apriFotoEspansa(indexInLista);
-        griglia.appendChild(imgThumb);
-      } else {
+      if (!item.percorso) {
         continuaScansione = false;
         break;
       }
@@ -604,17 +613,21 @@ window.apriGalleria = async function(nomeSuite) {
 };
 
 function cercaPrimoFormatoValido(cartella, numero) {
-  const verifiche = estensioniPossibili.map(ext => {
-    return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
+    let i = 0;
+    function provaProssimo() {
+      if (i >= estensioniPossibili.length) {
+        resolve(null);
+        return;
+      }
+      const percorso = `${cartella}${numero}.${estensioniPossibili[i]}`;
       const img = new Image();
-      const percorso = `${cartella}${numero}.${ext}`;
       img.onload = () => resolve(percorso);
-      img.onerror = () => reject();
+      img.onerror = () => { i++; provaProssimo(); };
       img.src = percorso;
-    });
+    }
+    provaProssimo();
   });
-
-  return Promise.any(verifiche).catch(() => null);
 }
 
 window.apriFotoEspansa = function(indice) {
