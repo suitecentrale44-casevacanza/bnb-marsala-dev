@@ -138,11 +138,21 @@ button:focus-visible,
 
 .badge-img-wrapper {
   margin: 1rem 0;
+  display: flex;
+  justify-content: center;
 }
 
 .badge-img {
-  max-width: 140px;
   height: auto;
+}
+
+.badge-img-medaglia {
+  max-width: 110px;
+}
+
+.badge-img-orizzontale {
+  max-width: 220px;
+  width: 100%;
 }
 
 .titolo-modal-calendario {
