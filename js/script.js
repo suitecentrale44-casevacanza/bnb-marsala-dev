@@ -294,7 +294,7 @@ window.selezionaDataGiorno = function(nomeSuite, dataStr) {
     sel.checkin = null;
     sel.checkout = null;
     if (infoElem) {
-      infoElem.innerText = "👉 Clicca sui giorni liberi nel calendario per scegliere Check-in e Check-out";
+      infoElem.innerText = "Seleziona nel calendario le date di check-in e check-out";
       infoElem.style.color = 'var(--blu-notte-testo)';
     }
   }
@@ -302,7 +302,7 @@ window.selezionaDataGiorno = function(nomeSuite, dataStr) {
     sel.checkout = null;
     if (infoElem) {
       const p = sel.checkin.split('-');
-      infoElem.innerText = `Check-in: ${p[2]}/${p[1]}/${p[0]} ➔ Clicca sulla data di Check-out`;
+      infoElem.innerText = `Check-in: ${p[2]}/${p[1]}/${p[0]} — seleziona la data di check-out`;
       infoElem.style.color = 'var(--blu-mare)';
     }
   }
@@ -319,7 +319,7 @@ window.selezionaDataGiorno = function(nomeSuite, dataStr) {
     sel.checkin = null;
     sel.checkout = null;
     if (infoElem) {
-      infoElem.innerText = "👉 Clicca sui giorni liberi nel calendario per scegliere Check-in e Check-out";
+      infoElem.innerText = "Seleziona nel calendario le date di check-in e check-out";
       infoElem.style.color = 'var(--blu-notte-testo)';
     }
   }
@@ -339,7 +339,7 @@ window.selezionaDataGiorno = function(nomeSuite, dataStr) {
       sel.checkout = null;
       if (infoElem) {
         const p = dataStr.split('-');
-        infoElem.innerText = `Check-in: ${p[2]}/${p[1]}/${p[0]} ➔ Clicca sulla data di Check-out`;
+        infoElem.innerText = `Check-in: ${p[2]}/${p[1]}/${p[0]} — seleziona la data di check-out`;
         infoElem.style.color = 'var(--blu-mare)';
       }
     }
@@ -350,7 +350,7 @@ window.selezionaDataGiorno = function(nomeSuite, dataStr) {
       sel.checkout = null;
       if (infoElem) {
         const p = dataStr.split('-');
-        infoElem.innerText = `Check-in: ${p[2]}/${p[1]}/${p[0]} ➔ Clicca sulla data di Check-out`;
+        infoElem.innerText = `Check-in: ${p[2]}/${p[1]}/${p[0]} — seleziona la data di check-out`;
         infoElem.style.color = 'var(--blu-mare)';
       }
     } else {
@@ -409,7 +409,7 @@ function renderizzaGrigliaCalendario(nomeSuite) {
 
   const erroreCaricamento = statoErroreCaricamento[nomeSuite] === true;
   const avvisoErrore = erroreCaricamento
-    ? `<div class="cal-avviso-errore">⚠️ Impossibile verificare la disponibilità in tempo reale. Le date mostrate come libere potrebbero non esserlo: contattaci prima di prenotare.</div>`
+    ? `<div class="cal-avviso-errore">Impossibile verificare la disponibilità in tempo reale. Le date mostrate come libere potrebbero non esserlo: contattaci prima di prenotare.</div>`
     : '';
 
   let html = `
@@ -537,7 +537,7 @@ window.apriGalleria = async function(nomeSuite) {
 
   document.getElementById('titolo-galleria').innerText = `Galleria Foto - ${config.titolo}`;
   const griglia = document.getElementById('galleria-griglia');
-  griglia.innerHTML = '<div style="grid-column: 1 / -1; color:white; text-align:center; padding: 20px;">⚡ Caricamento foto...</div>';
+  griglia.innerHTML = '<div style="grid-column: 1 / -1; color:white; text-align:center; padding: 20px;">Caricamento foto…</div>';
 
   const modal = document.getElementById('modal-galleria');
   modal.style.display = 'flex';
