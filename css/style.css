@@ -2,16 +2,16 @@
    0. TAVOLOZZA COLORI E VARIABILI "SICILIA"
    ========================================== */
 :root {
-  --blu-mare: #0077b6;
-  --azzurro-cielo: #00b4d8;
-  --giallo-limone: #ffb703;
-  --giallo-hover: #f7a000;
-  --bianco-salina: #fdfbf7;
-  --blu-notte-testo: #1d3557;
-  --grigio-bordo: #e2e8f0;
-  --grigio-testo-muto: #64748b;
-  --ombra-leggera: rgba(0, 119, 182, 0.15);
-  --ombra-intensa: rgba(0, 119, 182, 0.25);
+  --blu-mare: #1f4e79;
+  --azzurro-cielo: #3b6f9c;
+  --giallo-limone: #b08d57;
+  --giallo-hover: #96774a;
+  --bianco-salina: #f6f4f0;
+  --blu-notte-testo: #1f2933;
+  --grigio-bordo: #e3e6ea;
+  --grigio-testo-muto: #5b6673;
+  --ombra-leggera: rgba(17, 24, 39, 0.08);
+  --ombra-intensa: rgba(17, 24, 39, 0.14);
 }
 
 /* ==========================================
@@ -83,10 +83,11 @@ button:focus-visible,
   bottom: 0;
   left: 0;
   right: 0;
-  background: #1e293b;
+  background: var(--blu-notte-testo);
   color: #ffffff;
   padding: 16px;
   text-align: center;
+  font-size: 0.9rem;
   z-index: 999999;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
 }
@@ -104,15 +105,17 @@ button:focus-visible,
 }
 
 .btn-cookie-accetta {
-  background: #25D366;
-  color: #ffffff;
+  background: #ffffff;
+  color: var(--blu-notte-testo);
   margin-right: 8px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .btn-cookie-rifiuta {
-  background: #64748b;
+  background: transparent;
   color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  font-weight: 600;
 }
 
 /* Card badge riconoscimenti */
@@ -121,7 +124,6 @@ button:focus-visible,
 }
 
 .card-badge-airbnb {
-  border-left-color: #ff385c;
 }
 
 .card-badge-airbnb h3 {
@@ -129,7 +131,6 @@ button:focus-visible,
 }
 
 .card-badge-booking {
-  border-left-color: #003580;
 }
 
 .card-badge-booking h3 {
@@ -174,13 +175,9 @@ button:focus-visible,
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.recensione-card {
-  border-left-color: var(--giallo-limone);
-}
-
 .recensione-stelle {
   color: var(--giallo-limone);
-  font-size: 1.2rem;
+  font-size: 1rem;
   letter-spacing: 2px;
   margin-bottom: 0.6rem;
 }
@@ -197,8 +194,8 @@ button:focus-visible,
 .recensione-autore {
   margin-top: 0.8rem;
   font-weight: 600;
+  font-size: 0.9rem;
   color: var(--grigio-testo-muto);
-  font-style: italic;
 }
 
 ul {
@@ -226,7 +223,7 @@ ul li {
 h2 {
   color: var(--blu-mare);
   margin-bottom: 1rem;
-  border-bottom: 2px solid var(--grigio-bordo);
+  border-bottom: 1px solid var(--grigio-bordo);
   padding-bottom: 0.5rem;
 }
 
@@ -241,8 +238,8 @@ h3 {
   position: sticky;
   top: 0;
   background-color: #ffffff;
-  box-shadow: 0 4px 15px var(--ombra-leggera);
-  border-bottom: 3px solid var(--giallo-limone);
+  box-shadow: 0 1px 6px var(--ombra-leggera);
+  border-bottom: 1px solid var(--grigio-bordo);
   z-index: 999;
 }
 
@@ -288,11 +285,6 @@ h3 {
   cursor: pointer;
   padding: 0;
   z-index: 1000;
-  transition: transform 0.2s ease;
-}
-
-.nav-toggle-btn:hover {
-  transform: scale(1.05);
 }
 
 .hamburger-bar {
@@ -342,7 +334,7 @@ h3 {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease;
   padding: 4px 8px;
   width: 100%; /* Rende cliccabile tutta la riga, non solo il testo */
   display: block;
@@ -350,7 +342,6 @@ h3 {
 
 .nav-links a:hover {
   color: var(--blu-mare);
-  transform: translateY(-2px); /* L'effetto ora spinge leggermente verso l'alto anziché di lato, per mantenere la simmetria */
 }
 .lang-selector {
   position: relative;
@@ -369,12 +360,6 @@ h3 {
   cursor: pointer;
   overflow: hidden;
   padding: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-
-.lang-btn-rect:hover {
-  transform: scale(1.05);
 }
 
 .flag-icon {
@@ -433,11 +418,10 @@ h3 {
    3. HEADER RIPRISTINATO E PROPORZIONATO
    ========================================== */
 header {
-  background: linear-gradient(135deg, var(--blu-mare) 0%, var(--azzurro-cielo) 100%);
+  background-color: var(--blu-mare);
   color: #ffffff;
   text-align: center;
   padding: 2rem 1rem;
-  border-bottom: 5px solid var(--giallo-limone);
 }
 
 .header-logo {
@@ -447,8 +431,7 @@ header {
   max-height: 90px !important;
   border-radius: 50%;
   margin: 0 auto 1rem auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   object-fit: cover;
   display: block;
 }
@@ -457,14 +440,12 @@ header h1 {
   font-size: 1.8rem;
   margin-bottom: 0.4rem;
   color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 header .header-sub {
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 0.4rem;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
 header .header-desc {
@@ -491,34 +472,12 @@ header .header-desc {
   background: #ffffff;
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid var(--giallo-limone);
-  box-shadow: 0 4px 10px var(--ombra-leggera);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--grigio-bordo);
+  box-shadow: none;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2);
-}
-
-.card .img-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(29, 53, 87, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 10;
-  padding: 1rem;
-}
-
-.card:hover .img-overlay {
-  opacity: 1;
+.card .btn-wa-card {
+  margin-top: 1rem;
 }
 
 .btn-wa-card {
@@ -528,17 +487,15 @@ header .header-desc {
   background-color: #25D366;
   color: #ffffff !important;
   font-size: 0.9rem;
-  font-weight: 700;
-  padding: 8px 12px;
+  font-weight: 600;
+  padding: 8px 14px;
   border-radius: 8px;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .btn-wa-card:hover {
   background-color: #1eb954;
-  transform: scale(1.05);
 }
 
 /* ==========================================
@@ -555,18 +512,18 @@ header .header-desc {
 .card-casa {
   background: #ffffff;
   border-radius: 12px;
-  border: 1px solid rgba(0, 119, 182, 0.08);
+  border: 1px solid var(--grigio-bordo);
   padding: 1rem;
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 6px 15px var(--ombra-leggera);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px var(--ombra-leggera);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card-casa:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px var(--ombra-intensa);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--ombra-intensa);
 }
 
 .img-wrapper {
@@ -590,20 +547,13 @@ header .header-desc {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: rgba(29, 53, 87, 0.85);
+  background: rgba(17, 24, 39, 0.75);
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 5px 10px;
-  border-radius: 20px;
+  border-radius: 4px;
   z-index: 5;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  animation: respiro-badge 2.5s ease-in-out infinite;
-}
-
-@keyframes respiro-badge {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
 }
 
 .img-wrapper:hover .badge-galleria {
@@ -616,7 +566,7 @@ header .header-desc {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(29, 53, 87, 0.8);
+  background: rgba(17, 24, 39, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -630,18 +580,19 @@ header .header-desc {
 
 .btn-foto {
   color: var(--blu-notte-testo) !important;
-  background-color: var(--giallo-limone);
+  background-color: #ffffff;
+  border: none;
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 6px;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 0.85rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .btn-foto:hover {
-  background-color: var(--giallo-hover);
+  background-color: #eceff1;
 }
 
 /* ==========================================
@@ -671,21 +622,21 @@ header .header-desc {
   font-size: 0.85rem;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: background-color 0.2s ease;
   flex: 1 1 auto;
 }
 
 .btn-wa { background-color: #25D366; }
-.btn-wa:hover { background-color: #1eb954; transform: translateY(-2px); }
+.btn-wa:hover { background-color: #1eb954; }
 
 .btn-airbnb-official { background-color: #ff385c; }
-.btn-airbnb-official:hover { background-color: #e00b41; transform: translateY(-2px); }
+.btn-airbnb-official:hover { background-color: #e00b41; }
 
 .btn-booking-official { background-color: #003580; }
-.btn-booking-official:hover { background-color: #00224f; transform: translateY(-2px); }
+.btn-booking-official:hover { background-color: #00224f; }
 
 .btn-calendario { background-color: var(--blu-mare); }
-.btn-calendario:hover { background-color: #005f8f; transform: translateY(-2px); }
+.btn-calendario:hover { background-color: #173d5f; }
 
 /* ==========================================
    7. SOCIAL, MAPPA E FOOTER
@@ -704,18 +655,17 @@ header .header-desc {
   padding: 6px 14px;
   background-color: #f8fafc;
   border: 1px solid var(--grigio-bordo);
-  border-radius: 20px;
+  border-radius: 6px;
   text-decoration: none;
   color: var(--blu-notte-testo);
   font-size: 0.85rem;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .social-badge:hover {
   background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transform: translateY(-1px);
+  border-color: var(--blu-mare);
 }
 
 .map-container {
@@ -739,7 +689,6 @@ footer {
   padding: 2rem;
   color: var(--bianco-salina);
   font-size: 0.85rem;
-  border-top: 4px solid var(--giallo-limone);
 }
 
 footer p {
@@ -770,12 +719,6 @@ footer p {
   max-width: 70vw !important;
   height: auto !important;
   border-radius: 50%;
-  animation: pulseLogo 1s infinite alternate ease-in-out;
-}
-
-@keyframes pulseLogo {
-  0% { transform: scale(0.95); opacity: 0.85; }
-  100% { transform: scale(1.05); opacity: 1; }
 }
 
 #splash-screen.fade-out {
@@ -809,7 +752,7 @@ footer p {
 }
 
 @keyframes comparsa {
-  from { transform: scale(0.8); opacity: 0; }
+  from { transform: scale(0.96); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
@@ -842,14 +785,13 @@ footer p {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 999999;
   text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1);
   box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.4);
 }
 
@@ -880,17 +822,16 @@ footer p {
   color: #ffffff;
   border: none;
   padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 8px;
+  font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease;
   width: 100%;
 }
 
 .btn-invia-wa:hover {
   background-color: #1eb954;
-  transform: translateY(-2px);
 }
 
 /* ==========================================
@@ -1205,21 +1146,20 @@ footer p {
 }
 
 .cal-day.disponibile {
-  background-color: #e0f2fe;
-  color: #0369a1;
+  background-color: #eef3f8;
+  color: var(--blu-mare);
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
 .cal-day.disponibile:hover {
-  transform: scale(1.1);
-  background-color: #93c5fd;
+  background-color: #d3e1ee;
 }
 
 .cal-day.occupato {
-  background-color: #fee2e2;
-  color: #dc2626;
+  background-color: #f5e6e6;
+  color: #9b2c2c;
   text-decoration: line-through;
   opacity: 0.7;
   cursor: not-allowed;
@@ -1247,8 +1187,8 @@ footer p {
   margin-right: 4px;
 }
 
-.cal-legend .dot.lib { background-color: #e0f2fe; border: 1px solid #0369a1; }
-.cal-legend .dot.occ { background-color: #fee2e2; border: 1px solid #dc2626; }
+.cal-legend .dot.lib { background-color: #eef3f8; border: 1px solid var(--blu-mare); }
+.cal-legend .dot.occ { background-color: #f5e6e6; border: 1px solid #9b2c2c; }
 
 
 /* ==========================================
@@ -1256,16 +1196,15 @@ footer p {
    ========================================== */
 .cal-day.selezionato-checkin,
 .cal-day.selezionato-checkout {
-  background-color: #25D366 !important;
+  background-color: var(--blu-mare) !important;
   color: #ffffff !important;
-  font-weight: bold;
+  font-weight: 600;
   border-radius: 6px;
-  transform: scale(1.05);
 }
 
 .cal-day.in-range {
-  background-color: #bbf7d0 !important;
-  color: #14532d !important;
+  background-color: #d3e1ee !important;
+  color: #173d5f !important;
   font-weight: 600;
 }
 
@@ -1274,8 +1213,6 @@ footer p {
    ========================================== */
 .recensione-section {
   text-align: center;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border-left: 5px solid var(--giallo-limone);
   padding: 2.5rem 1.5rem;
 }
 
@@ -1286,15 +1223,9 @@ footer p {
 
 .recensione-box p {
   color: var(--blu-notte-testo);
-  font-size: 1.05rem;
-  margin-bottom: 1.2rem;
-  line-height: 1.6;
-}
-
-.stelle-valutazione {
-  font-size: 1.8rem;
+  font-size: 1rem;
   margin-bottom: 1.5rem;
-  letter-spacing: 3px;
+  line-height: 1.6;
 }
 
 .btn-recensione-google {
@@ -1304,19 +1235,16 @@ footer p {
   gap: 10px;
   background-color: var(--blu-mare);
   color: #ffffff !important;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1rem;
   padding: 12px 28px;
-  border-radius: 30px;
+  border-radius: 8px;
   text-decoration: none;
-  box-shadow: 0 4px 12px var(--ombra-leggera);
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .btn-recensione-google:hover {
-  background-color: #005f8f;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px var(--ombra-intensa);
+  background-color: #173d5f;
 }
 
 @media (max-width: 600px) {
@@ -1347,7 +1275,7 @@ footer p {
   background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--grigio-bordo);
   border-radius: 50%;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   color: var(--blu-mare);
   font-size: 22px;
   font-weight: bold;
@@ -1396,4 +1324,28 @@ footer p {
   font-size: 0.85rem;
   line-height: 1.4;
   text-align: center;
+}
+
+/* Elenco servizi */
+.lista-servizi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0 2rem;
+}
+
+.lista-servizi li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--grigio-bordo);
+}
+
+.lista-servizi li::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--blu-mare);
 }
