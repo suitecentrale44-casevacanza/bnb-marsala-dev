@@ -4,7 +4,7 @@ name: Aggiorna calendari disponibilità
 # dalla scheda "Actions" del repository ("Run workflow").
 on:
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 # Serve per permettere all'Action di scrivere (commit) il file calendari.json
